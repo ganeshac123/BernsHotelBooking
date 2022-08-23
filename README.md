@@ -1,2 +1,1 @@
-# BernsHotelBooking
-BDD Selenium test for booking hotel room for Berns hotel
+mvn test -Dcucumber.options="--tags @ui" to run the UI tests
