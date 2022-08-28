@@ -1,8 +1,10 @@
 package stepDefinitions;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
+
 import helpers.Utils;
+
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -30,12 +32,12 @@ public class Hooks {
         configProperties = Utils.readPropertiesFile();
         browser = configProperties.getProperty("browser");
     }
-
+    
    
-    @Before("~@ApiTests")
-    public void openBrowser() {
+    @Before
+    public void openBrowser() throws InterruptedException {
 
-        log.info("Hoite booking test Started");
+        log.info("Hotel booking test Started");
 
         if (getOS().contains("WINDOWS")) {
 
@@ -45,6 +47,7 @@ public class Hooks {
                     String winChromePath = Paths.get(winChromeDriver).toAbsolutePath().toString();
                     System.setProperty("webdriver.chrome.driver", winChromePath);
                     driver = new ChromeDriver();
+                    Thread.sleep(5000);
                     break;
                 case "firefox":
                     String winFirefoxDriver = "src" + fs + "test" + fs + "resources" + fs + "Drivers" + fs + "GeckoDriver" + fs + "geckodriver.exe";
@@ -74,10 +77,8 @@ public class Hooks {
         }
     }
 
-    /**
-     * This will quit the driver instance
-     */
-    @After("~@ApiTests")
+    
+    @After
     public void quitDriver() {
         driver.quit();
         log.info("Test Finished");
@@ -88,8 +89,9 @@ public class Hooks {
         return System.getProperty("os.name").toUpperCase();
     }
 
-    public static void initiateWebdriver() {
+    public static void initiateWebdriver() throws InterruptedException {
         log.info("Opening Browser...." + browser);
+        Thread.sleep(5000);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(configProperties.getProperty("url"));

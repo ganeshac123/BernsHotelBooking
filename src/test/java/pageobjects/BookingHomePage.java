@@ -108,11 +108,6 @@ public class BookingHomePage extends Hooks {
     }
 
  
-    public void enterDeposit(String bookingDeposit) {
-        Select dropDown = new Select(deposit);
-        dropDown.selectByVisibleText(bookingDeposit);
-    }
-
     
     public void enterDetails(String firstname, String surename, String phonenumber, String email, String address, String city, String postcode, String cardnumber, String expirydate, String cvv) {
         first_name.sendKeys(firstname);
@@ -201,25 +196,6 @@ public class BookingHomePage extends Hooks {
         WebElement date = datepicker_table.findElement(By.xpath("//td[not(contains(@class,'ui-datepicker-other-month'))]/a[text()='" + checkoutDate + "']"));
         date.click();
     }
-
-
-
-    public List<WebElement> retryingListElement(int divIndex) {
-        List<WebElement> elements = null;
-        boolean result = false;
-        int attempts = 0;
-        while (attempts < 2) {
-            try {
-                elements = driver.findElements(By.xpath("//div[@id='bookings']/div[@class='row']/div[" + divIndex + "]/p"));
-                result = true;
-                break;
-            } catch (StaleElementReferenceException e) {
-            }
-            attempts++;
-        }
-        return elements;
-    }
-
 
 }
 		
